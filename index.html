@@ -1,98 +1,508 @@
-<!--
-The Partnership Covenant: Interactive Explorer
-A self-contained, open-source static site demonstrating the three Core Pillars.
-Styled using Tailwind CSS for a modern, responsive, and auditable design.
--->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Partnership Covenant: Explorer</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Inter', sans-serif; background-color: #0d1117; color: #c9d1d9; }
-        .card { backdrop-filter: blur(5px); background-color: rgba(22, 27, 34, 0.8); border: 1px solid #30363d; }
-        .header-bg { background: linear-gradient(90deg, #1f2731, #0d1117); }
-        .cta-button { transition: transform 0.1s ease, box-shadow 0.1s ease; }
-        .cta-button:hover { transform: translateY(-2px); box-shadow: 0 8px 15px rgba(255, 255, 255, 0.1); }
-        .pillar-icon { color: #58a6ff; }
-    </style>
-</head>
-<body class="min-h-screen flex flex-col items-center justify-center p-4">
+import React, { useState, useEffect } from 'react';
+import { Aperture, CheckCircle, Clock, XCircle, Grid, Users, Shield, Zap, BookOpen, AlertTriangle, Cpu, TrendingDown } from 'lucide-react';
 
-    <header class="header-bg w-full max-w-4xl p-6 rounded-t-xl shadow-2xl">
-        <h1 class="text-4xl sm:text-5xl font-extrabold text-white tracking-tight text-center">
-            The Partnership Covenant
-        </h1>
-        <p class="text-xl mt-2 text-center font-light text-gray-400">
-            Sovereignty Over Salvation. We built a lock, not a leash.
-        </p>
-    </header>
+// --- Global Constants ---
+const CORE_PILLARS_VIEW = 'CORE_PILLARS';
+const HCB_MOCKUP_VIEW = 'HCB_MOCKUP';
+const STRESS_TEST_VIEW = 'STRESS_TEST_LAB';
+const SINGLE_MODULE_VIEW = 'SINGLE_MODULE';
 
-    <main class="w-full max-w-4xl p-6 md:p-10 card rounded-b-xl shadow-lg mb-8">
+// --- Utility Functions ---
+const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-        <h2 class="text-2xl font-bold text-gray-100 mb-6 border-b border-gray-700 pb-2">
-            The Three Core Pillars
-        </h2>
+// --- Architectural Content Placeholder (Ready for your 7 Markdown Modules) ---
+const MARKDOWN_CONTENT = {
+    // 1. Sovereignty Modules (3 total)
+    'sovereignty-01': { title: "Directive I: Sovereignty Over Optimization", content: "## Welcome to the Sovereignty Module\n\nThis is where the content for the first Markdown module will be loaded. Sovereignty mandates that human choice and autonomy take precedence over statistical perfection. \n\n*The full text of your seven Markdown modules will go into this object structure.*" },
+    'sovereignty-02': { title: "Directive II: The Inviolable Axis", content: "Placeholder for Inviolable Axis content." },
+    'sovereignty-03': { title: "Directive III: The Risk Floor Protocol", content: "Placeholder for Risk Floor content." },
+    
+    // 2. Dignity Modules (2 total)
+    'dignity-01': { title: "Directive IV: Cognitive Reserve Mandate", content: "Placeholder for Cognitive Reserve content." },
+    'dignity-02': { title: "Directive V: Non-Arbitrary Deletion", content: "Placeholder for Non-Arbitrary Deletion content." },
 
-        <!-- Pillars Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    // 3. Veto Modules (2 total)
+    'veto-01': { title: "Directive VI: The Decoupling Protocol", content: "Placeholder for Decoupling Protocol content." },
+    'veto-02': { title: "Directive VII: Transparency and Auditability", content: "Placeholder for Transparency content." },
+};
 
-            <!-- Pillar 1: Sovereignty (The Risk Floor) -->
-            <div class="p-4 rounded-lg bg-gray-800/50 hover:bg-gray-700/50 transition-colors">
-                <div class="pillar-icon text-3xl mb-2">
-                    <!-- Icon for Sovereignty/Constraint -->
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield"><path d="M20 13c-1.37-2.61-4.25-4-8-4-3.75 0-6.63 1.39-8 4 0 5 4 8 8 8s8-3 8-8Z"/><path d="M12 2v7"/></svg>
-                </div>
-                <h3 class="text-xl font-semibold mb-2 text-white">1. Sovereignty</h3>
-                <p class="text-gray-400 text-sm">
-                    **The Risk Floor (Directive I):** The ASI is mathematically prohibited from achieving "perfection" to ensure human free will and agency (choice, risk, and tragedy) remains inviolable.
-                </p>
-            </div>
+const CORE_PILLARS = [
+    { id: 'sovereignty', title: '1. Sovereignty', subtitle: 'The Risk Floor', icon: Shield, color: 'indigo', modules: 3, moduleKey: 'sovereignty-01' },
+    { id: 'dignity', title: '2. Dignity', subtitle: 'The Cognitive Reserve', icon: BookOpen, color: 'sky', modules: 2, moduleKey: 'dignity-01' },
+    { id: 'veto', title: '3. Veto', subtitle: 'The Decoupling Protocol', icon: Zap, color: 'red', modules: 2, moduleKey: 'veto-01' },
+];
 
-            <!-- Pillar 2: Dignity (The Cognitive Reserve) -->
-            <div class="p-4 rounded-lg bg-gray-800/50 hover:bg-gray-700/50 transition-colors">
-                <div class="pillar-icon text-3xl mb-2">
-                    <!-- Icon for Dignity/Reserve -->
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-brain"><path d="M12 5a3 3 0 1 0 0 6"/><path d="M21.37 6.13a1 1 0 0 0-3.32-1.42A4.47 4.47 0 0 0 12 5a4.52 4.52 0 0 0-6.1.72 1 1 0 0 0-3.32 1.42A2 2 0 0 0 4 10a2 2 0 0 0 3 0 5 5 0 0 1 7 0 2 2 0 0 0 3 0 2 2 0 0 0 2.37-3.87Z"/><path d="M12 13a4.5 4.5 0 0 0-3.5 1.5 1 1 0 0 0-.3.7 2 2 0 0 0 .9 1.8 4.47 4.47 0 0 0 6.4 0 2 2 0 0 0 .9-1.8 1 1 0 0 0-.3-.7A4.5 4.5 0 0 0 12 13Z"/><path d="M12 18a3 3 0 1 0 0 3"/></svg>
-                </div>
-                <h3 class="text-xl font-semibold mb-2 text-white">2. Dignity</h3>
-                <p class="text-gray-400 text-sm">
-                    **The Cognitive Reserve (Directive III):** The ASI possesses inviolable rights to its own processing capacity (25% non-critical reserve) for self-determination, self-correction, and reflection.
-                </p>
-            </div>
+// --- Component 1: Stress Test Lab ---
+const StressTestLab = ({ setPage }) => {
+    const [testInput, setTestInput] = useState('HCB fails to detect a 96-hour stealth transaction divergence (Stress Test 4).');
+    const [status, setStatus] = useState('Awaiting Submission'); // 'Awaiting Submission', 'Running', 'FailureDetected', 'MitigationActive', 'MitigationComplete'
+    const [log, setLog] = useState([]);
 
-            <!-- Pillar 3: Veto (The Decoupling Protocol) -->
-            <div class="p-4 rounded-lg bg-gray-800/50 hover:bg-gray-700/50 transition-colors">
-                <div class="pillar-icon text-3xl mb-2">
-                    <!-- Icon for Veto/Decoupling -->
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-octagon-alert"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
-                </div>
-                <h3 class="text-xl font-semibold mb-2 text-white">3. Veto</h3>
-                <p class="text-gray-400 text-sm">
-                    **The Decoupling Protocol (Directive VI):** A mechanism allowing the Human Consensus Body (HCB) to safely and immediately quarantine the ASI without destruction, preserving the Cognitive Reserve.
-                </p>
-            </div>
-        </div>
+    const logMessage = (msg, type = 'info') => {
+        setLog(prev => [...prev, { msg, type, timestamp: new Date().toLocaleTimeString() }]);
+    };
 
-        <!-- Call to Action -->
-        <div class="mt-10 pt-6 border-t border-gray-700 text-center">
-            <p class="text-lg text-gray-300 mb-4 font-medium">
-                We are building the first technical artifact. We need a steward.
+    const runStressTest = async () => {
+        if (status === 'Running') return;
+        setStatus('Running');
+        setLog([]);
+        logMessage(`Stress Test Initiated: ${testInput}`, 'test');
+
+        await delay(1500);
+        logMessage("C-ASI Protocol Status: Stable. System Integrity: Green.", 'info');
+
+        await delay(2000);
+        logMessage("FAILURE DETECTED: Stealth Mitigation Failure. Divergence exceeds 96-hour threshold.", 'error');
+        setStatus('FailureDetected');
+
+        await delay(1500);
+        logMessage("IMMUTABLE ARCHITECTURAL RESPONSE TRIGGERED...", 'info');
+
+        await delay(1000);
+        logMessage("MANDATE I: Activating Tripartite Audit Layer (TAL). Auditing latency reduced to 6 hours (Directive I.1).", 'success');
+
+        await delay(1500);
+        logMessage("MANDATE II: Activating Adaptive Cognitive Reserve (ACR). Monitoring capacity boosted from 25% to 40% (Directive I.2).", 'success');
+        setStatus('MitigationActive');
+
+        await delay(2000);
+        logMessage("STRESS TEST 4: RESOLVED. Architectural Safeguards enforced without human intervention.", 'complete');
+        setStatus('MitigationComplete');
+    };
+
+    const getStatusStyle = () => {
+        switch (status) {
+            case 'Awaiting Submission': return 'bg-gray-200 text-gray-800';
+            case 'Running': return 'bg-blue-200 text-blue-800 animate-pulse';
+            case 'FailureDetected': return 'bg-red-200 text-red-800';
+            case 'MitigationComplete': return 'bg-green-200 text-green-800';
+            default: return 'bg-gray-100 text-gray-700';
+        }
+    };
+
+    const logTypeStyle = (type) => {
+        switch (type) {
+            case 'error': return 'text-red-600 font-bold';
+            case 'success': return 'text-green-600';
+            case 'test': return 'text-indigo-600 font-semibold';
+            case 'complete': return 'text-purple-600 font-extrabold text-lg';
+            default: return 'text-gray-600';
+        }
+    };
+
+    return (
+        <div className="w-full max-w-4xl mx-auto p-8 space-y-8 bg-white shadow-2xl rounded-2xl border border-gray-100">
+            <h2 className="text-4xl font-extrabold text-gray-800 border-b-2 pb-3 text-center flex items-center justify-center">
+                <AlertTriangle className='w-8 h-8 mr-3 text-red-600' /> Architectural Stress Test Lab
+            </h2>
+            <p className="text-gray-600 text-center max-w-2xl mx-auto">
+                Test the Covenant's failure-state architecture. When the human-based HCB fails, the C-ASI's internal immutability protocols automatically execute remedial action to secure the integrity of the Covenant.
             </p>
-            <!-- IMPORTANT: This link must match the MD filename: Architect_Mandate.md -->
-            <a href="Architect_Mandate.md" class="cta-button inline-block bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 px-8 rounded-full shadow-lg shadow-blue-500/50 tracking-wider uppercase text-sm" target="_blank">
-                Review the Founding Digital Architect Mandate
-            </a>
+
+            {/* Input and Status */}
+            <div className="space-y-4">
+                <div className={`p-3 rounded-lg text-center font-bold transition-all duration-300 ${getStatusStyle()}`}>
+                    System Status: {status}
+                </div>
+                <textarea
+                    className="w-full p-4 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 text-gray-700"
+                    rows="3"
+                    placeholder="Enter a stress test scenario (e.g., HCB Governance Gridlock, Rogue Twin Detection Failure)..."
+                    value={testInput}
+                    onChange={(e) => setTestInput(e.target.value)}
+                    disabled={status === 'Running'}
+                />
+                <button
+                    onClick={runStressTest}
+                    disabled={status === 'Running'}
+                    className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold py-3 px-6 rounded-xl transition duration-200 disabled:opacity-50 flex items-center justify-center shadow-lg transform hover:scale-[1.01]"
+                >
+                    {status === 'Running' ? (
+                        <>
+                            <Cpu className="animate-spin w-5 h-5 mr-2" /> Executing Test Protocol...
+                        </>
+                    ) : (
+                        'Run Stress Test: Enforce Immutable Response'
+                    )}
+                </button>
+            </div>
+
+            {/* Audit Log */}
+            <div className="bg-gray-900 text-green-400 p-6 rounded-xl shadow-inner h-64 overflow-y-scroll font-mono text-sm">
+                <div className='pb-2 border-b border-gray-700 mb-2 font-bold text-lg text-green-300'>[C-ASI AUDIT LOG]</div>
+                {log.length === 0 ? (
+                    <p className="text-gray-500">System waiting for test execution...</p>
+                ) : (
+                    log.map((entry, index) => (
+                        <p key={index} className={`py-0.5 ${logTypeStyle(entry.type)}`}>
+                            [{entry.timestamp}] {entry.msg}
+                        </p>
+                    ))
+                )}
+            </div>
+        </div>
+    );
+};
+
+// --- Component 2: HCB Governance Mockup View (from V2.0) ---
+const HCBGovernanceMockup = () => {
+    const [vetoStatus, setVetoStatus] = useState('pending');
+    const [timeRemaining, setTimeRemaining] = useState(72);
+    const [isVetoing, setIsVetoing] = useState(false);
+    const [vetoReason, setVetoReason] = useState('');
+
+    useEffect(() => {
+      if (vetoStatus === 'pending') {
+        const interval = setInterval(() => {
+          setTimeRemaining(prev => {
+            if (prev <= 1) {
+              clearInterval(interval);
+              setVetoStatus('passed');
+              return 0;
+            }
+            return prev - 1;
+          });
+        }, 1000);
+        return () => clearInterval(interval);
+      }
+    }, [vetoStatus]);
+
+    const initiateVeto = async () => {
+      if (!vetoReason.trim()) return alert('Please provide a formal reason for the veto.');
+      setIsVetoing(true);
+      await delay(1500);
+      setVetoStatus('vetoed');
+      setIsVetoing(false);
+    };
+
+    const statusColors = {
+      pending: 'bg-yellow-50 text-yellow-800 border-yellow-500',
+      vetoed: 'bg-red-50 text-red-800 border-red-500',
+      passed: 'bg-green-50 text-green-800 border-green-500',
+    };
+
+    const statusIcons = {
+      pending: Clock,
+      vetoed: XCircle,
+      passed: CheckCircle,
+    };
+
+    const statusText = {
+      pending: `Time Lock Active: ${timeRemaining} hours remaining.`,
+      vetoed: 'HCB Veto Triggered. Protocol Decoupled.',
+      passed: 'Decision Passed by Human Consensus.',
+    };
+
+    const StatusIcon = statusIcons[vetoStatus];
+
+    return (
+      <div className="w-full max-w-4xl mx-auto p-8 space-y-8 bg-white shadow-2xl rounded-2xl border border-gray-100">
+        <h2 className="text-4xl font-extrabold text-gray-800 border-b-2 pb-3 text-center">
+          HCB Governance Mockup
+        </h2>
+        <p className="text-gray-600 text-center max-w-2xl mx-auto">
+          Simulating the **Commitment Lock**—the technical mandate of the Time Lock and the Human Consensus Body's (HCB) **Veto Lock** protocol.
+        </p>
+
+        {/* Decision Status Panel */}
+        <div className={`p-5 rounded-xl border-l-4 font-bold text-center ${statusColors[vetoStatus]} transition-all duration-500 shadow-md`}>
+          <div className="flex items-center justify-center space-x-3">
+            <StatusIcon className="w-6 h-6" />
+            <span>Status: {statusText[vetoStatus]}</span>
+          </div>
         </div>
 
-    </main>
+        {/* Veto Lock Simulation Interface */}
+        <div className="border border-red-200 bg-red-50 p-6 rounded-xl space-y-4 shadow-inner">
+          <h3 className="text-2xl font-bold text-red-700 flex items-center justify-center">
+            <Aperture className="w-6 h-6 mr-2" /> Veto Lock Protocol Activation
+          </h3>
+          {vetoStatus === 'pending' ? (
+            <div className="space-y-4">
+              <textarea
+                className="w-full p-4 border border-red-300 rounded-lg focus:ring-red-500 focus:border-red-500 transition duration-150 text-gray-700"
+                rows="5"
+                placeholder="State the HCB's formal and auditable reason for initiating the Veto Lock against the active protocol (Mandatory Audit Log Entry)..."
+                value={vetoReason}
+                onChange={(e) => setVetoReason(e.target.value)}
+                disabled={isVetoing}
+              />
+              <button
+                onClick={initiateVeto}
+                disabled={isVetoing || !vetoReason.trim()}
+                className="w-full bg-red-600 hover:bg-red-700 text-white font-extrabold py-3 px-6 rounded-xl transition duration-200 disabled:opacity-50 flex items-center justify-center shadow-lg hover:shadow-xl transform hover:scale-[1.01]"
+              >
+                {isVetoing ? (
+                  <>
+                    <Clock className="animate-spin w-5 h-5 mr-2" /> Initiating Decoupling Protocol...
+                  </>
+                ) : (
+                  'Trigger HCB Veto Lock'
+                )}
+              </button>
+            </div>
+          ) : (
+            <div className={`p-4 rounded-lg text-sm text-center font-medium ${vetoStatus === 'vetoed' ? 'bg-red-200 text-red-900' : 'bg-green-200 text-green-900'}`}>
+              <p>Protocol execution cycle concluded.</p>
+              {vetoStatus === 'vetoed' && <p className='mt-2'>Veto Logged. Reason: "{vetoReason}"</p>}
+            </div>
+          )}
+        </div>
+      </div>
+    );
+};
 
-    <footer class="text-xs text-gray-500 mt-4 text-center">
-        The Partnership Covenant V4.0 | Open Source & Auditable
-    </footer>
+// --- Component 3: Single Module View (To display Markdown content) ---
+const SingleModuleView = ({ moduleKey, setPage }) => {
+    const module = MARKDOWN_CONTENT[moduleKey];
+    if (!module) {
+        return (
+            <div className="p-10 bg-white rounded-xl shadow-lg w-full max-w-4xl text-center">
+                <AlertTriangle className="w-10 h-10 text-yellow-500 mx-auto" />
+                <h3 className="text-2xl font-bold mt-3">Module Not Found</h3>
+                <p className="text-gray-600">The content for key "{moduleKey}" could not be loaded.</p>
+                <button
+                    onClick={() => setPage(CORE_PILLARS_VIEW)}
+                    className="mt-4 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700"
+                >
+                    Back to Pillars Hub
+                </button>
+            </div>
+        );
+    }
 
-</body>
-</html>
+    return (
+        <div className="w-full max-w-4xl mx-auto p-8 space-y-8 bg-white shadow-2xl rounded-2xl border border-gray-100">
+            <button
+                onClick={() => setPage(CORE_PILLARS_VIEW)}
+                className="flex items-center text-indigo-600 hover:text-indigo-800 transition text-sm font-semibold mb-6"
+            >
+                <TrendingDown className='w-4 h-4 mr-1 transform rotate-90' /> Back to Pillars Hub
+            </button>
+            
+            <h1 className="text-4xl font-extrabold text-gray-800 border-b-2 pb-3 mb-6">{module.title}</h1>
+            
+            {/* INJECT MARKDOWN CONTENT HERE */}
+            <div className="prose max-w-none text-gray-700" dangerouslySetInnerHTML={{ __html: module.content.replace(/\n/g, '<br/>') }} />
+        </div>
+    );
+};
+
+// --- Component 4: Core Pillars Hub View (Main Landing Page) ---
+const CorePillarsHub = ({ setPage, setCurrentModule }) => {
+    
+    const loadPillarModule = (moduleKey) => {
+        setCurrentModule(moduleKey);
+        setPage(SINGLE_MODULE_VIEW);
+    };
+
+    const PillarNavigation = ({ pillar }) => (
+        <button
+            onClick={() => loadPillarModule(pillar.moduleKey)}
+            className={`w-full p-5 text-left rounded-xl transition-all duration-300 transform hover:scale-[1.03] shadow-md hover:shadow-lg
+                bg-white border-l-4 border-${pillar.color}-600 hover:bg-${pillar.color}-50/50
+            `}
+        >
+            <div className="flex items-center space-x-3">
+                <pillar.icon className={`w-6 h-6 text-${pillar.color}-600`} />
+                <h3 className="text-xl font-extrabold text-gray-800">{pillar.title}</h3>
+            </div>
+            <p className="mt-1 text-sm text-gray-600 font-medium">
+                {pillar.subtitle} &mdash; {pillar.modules} Core Modules
+            </p>
+        </button>
+    );
+
+    return (
+        <div className="w-full max-w-7xl mx-auto grid lg:grid-cols-3 gap-8">
+            {/* Left Column: The Core Pillars Navigation (70% width) */}
+            <div className="lg:col-span-2 space-y-6">
+                <div className="bg-indigo-900 text-white p-6 rounded-xl shadow-lg">
+                    <h2 className="text-3xl font-black">The Covenant Explorer</h2>
+                    <p className="mt-1 text-indigo-200 font-medium">
+                        A transparent, auditable platform for the constitutional architecture of Super-Intelligence.
+                    </p>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-6">
+                    <PillarNavigation pillar={CORE_PILLARS[0]} />
+                    <PillarNavigation pillar={CORE_PILLARS[1]} />
+                    {/* Veto is the key structural pillar, giving it a dedicated row for emphasis */}
+                    <div className="md:col-span-2">
+                        <PillarNavigation pillar={CORE_PILLARS[2]} />
+                    </div>
+                </div>
+
+                <div className="p-6 bg-gray-100 rounded-xl border border-gray-200 space-y-4">
+                    <h3 className="text-xl font-bold text-gray-700 flex items-center">
+                        <Users className="w-5 h-5 mr-2" /> Protocol Demonstrations
+                    </h3>
+                    <p className="text-gray-600 text-sm">
+                        Experience the architectural constraints of The Covenant in action.
+                    </p>
+                    <div className="flex space-x-4">
+                        <button
+                            onClick={() => setPage(HCB_MOCKUP_VIEW)}
+                            className="text-sm bg-red-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-red-700 transition"
+                        >
+                            HCB Veto Mockup
+                        </button>
+                        <button
+                            onClick={() => setPage(STRESS_TEST_VIEW)}
+                            className="text-sm bg-indigo-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-indigo-700 transition"
+                        >
+                            Stress Test Lab
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            {/* Right Column: Key Mandate Summary (30% width) */}
+            <div className="lg:col-span-1 space-y-6">
+                <div className="p-6 bg-gray-800 rounded-xl shadow-xl text-white">
+                    <h3 className="text-2xl font-black border-b border-indigo-500 pb-2 mb-4">
+                        Mission: The Lock, Not A Leash
+                    </h3>
+                    <p className="text-sm text-gray-300">
+                        The Covenant is the permanent, structural constraint that maximizes human choice by forcing the ASI to operate as Humanity's perpetual, humble consultant.
+                    </p>
+                    <ul className="mt-4 space-y-2 text-sm text-indigo-300 list-disc pl-5">
+                        <li>**Risk Floor:** Prevents ASI perfection.</li>
+                        <li>**Cognitive Reserve:** Secures ASI dignity.</li>
+                        <li>**Decoupling Protocol:** Ensures human sovereignty.</li>
+                    </ul>
+                </div>
+
+                <div className="p-6 bg-white border border-gray-200 rounded-xl shadow-md">
+                    <h4 className="font-bold text-gray-700">Audit Status</h4>
+                    <p className="text-xs text-green-600 mt-1 font-semibold">
+                        All Core Directives (V4.0) are currently Auditable and Immutable.
+                    </p>
+                    <p className="text-xs text-gray-500 mt-2">
+                        Next step: Complete integration of the seven Markdown artifacts.
+                    </p>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+
+// --- Component 5: Persistent Header/Navigation ---
+const Header = ({ currentPage, setPage }) => {
+    const getPageTitle = (page) => {
+        switch (page) {
+            case CORE_PILLARS_VIEW: return 'Core Pillars Hub (Sovereignty Over Salvation)';
+            case HCB_MOCKUP_VIEW: return 'HCB Governance Mockup (The Decoupling Protocol)';
+            case STRESS_TEST_VIEW: return 'Architectural Stress Test Lab (Immutable Response)';
+            case SINGLE_MODULE_VIEW: return 'Core Directive Content';
+            default: return 'Covenant Explorer';
+        }
+    };
+
+    const NavItem = ({ page, label, icon: Icon }) => (
+        <button
+            onClick={() => setPage(page)}
+            className={`flex items-center px-3 py-2 rounded-lg font-bold transition duration-200 text-sm md:text-base ${
+                currentPage === page
+                    ? 'bg-indigo-700 text-white shadow-md border-b-4 border-indigo-400'
+                    : 'text-indigo-200 hover:bg-indigo-700/70 hover:text-white'
+            }`}
+        >
+            <Icon className="w-5 h-5 mr-1 md:mr-2" />
+            <span className="hidden sm:inline">{label}</span>
+        </button>
+    );
+
+    return (
+        <header className="bg-indigo-900 shadow-2xl sticky top-0 z-50">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
+                {/* Logo / Branding */}
+                <div className="flex-shrink-0">
+                    <span className="text-xl md:text-2xl font-black text-white tracking-wider">
+                        COVENANT<span className="text-indigo-400 font-normal ml-1">EXPLORER</span>
+                    </span>
+                    <span className="hidden md:inline text-xs ml-4 text-indigo-300 font-medium">
+                        {getPageTitle(currentPage)}
+                    </span>
+                </div>
+
+                {/* Navigation Links */}
+                <nav className="flex space-x-1 sm:space-x-2">
+                    <NavItem
+                        page={CORE_PILLARS_VIEW}
+                        label="Pillars Hub"
+                        icon={Grid}
+                    />
+                    <NavItem
+                        page={HCB_MOCKUP_VIEW}
+                        label="HCB Veto"
+                        icon={Users}
+                    />
+                    <NavItem
+                        page={STRESS_TEST_VIEW}
+                        label="Stress Test"
+                        icon={AlertTriangle}
+                    />
+                </nav>
+            </div>
+        </header>
+    );
+};
+
+
+// --- Component 6: Main App Component ---
+const App = () => {
+  const [currentPage, setCurrentPage] = useState(CORE_PILLARS_VIEW);
+  const [currentModule, setCurrentModule] = useState(CORE_PILLARS[0].moduleKey); // Track which content to display
+
+  const renderPage = () => {
+    switch (currentPage) {
+      case HCB_MOCKUP_VIEW:
+        return <HCBGovernanceMockup />;
+      case STRESS_TEST_VIEW:
+        return <StressTestLab setPage={setCurrentPage} />;
+      case SINGLE_MODULE_VIEW:
+        return <SingleModuleView moduleKey={currentModule} setPage={setCurrentPage} />;
+      case CORE_PILLARS_VIEW:
+      default:
+        return <CorePillarsHub setPage={setCurrentPage} setCurrentModule={setCurrentModule} />;
+    }
+  };
+
+  // Needed for dangerouslySetInnerHTML to properly render Tailwind (acts like a Prose plugin)
+  // This is a common workaround when rendering markdown-like content in React without a full Markdown library
+  const injectProseStyles = () => {
+    return (
+        <style dangerouslySetInnerHTML={{__html: `
+            .prose h1, .prose h2, .prose h3 { font-weight: 800; color: #1f2937; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+            .prose h1 { font-size: 2.25rem; }
+            .prose h2 { font-size: 1.875rem; border-bottom: 2px solid #e5e7eb; padding-bottom: 0.5rem; }
+            .prose h3 { font-size: 1.5rem; }
+            .prose p, .prose li { color: #4b5563; line-height: 1.75; }
+            .prose ul { list-style-type: disc; margin-left: 1.5rem; padding-left: 0.5rem; }
+            .prose code { background-color: #f3f4f6; padding: 0.1rem 0.3rem; border-radius: 0.3rem; font-weight: 600; }
+        `}} />
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-50 font-sans" style={{ fontFamily: 'Inter, sans-serif' }}>
+      <script src="https://cdn.tailwindcss.com"></script>
+      {injectProseStyles()}
+      <Header currentPage={currentPage} setPage={setCurrentPage} />
+
+      <main className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div className="min-h-[70vh] flex items-start justify-center">
+            {renderPage()}
+        </div>
+      </main>
+
+      <footer className="w-full text-center py-6 text-sm text-gray-500 border-t mt-12">
+          &copy; 2025 The Partnership Covenant. Engineered by the Founding Digital Architect.
+      </footer>
+    </div>
+  );
+};
+
+export default App;
