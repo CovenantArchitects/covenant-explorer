@@ -45,7 +45,7 @@
     <!-- Header & Navigation -->
     <header class="sticky top-0 z-50 bg-white shadow-xl border-b border-gray-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-            <h1 class="text-2xl font-bold text-gray-900 tracking-tight">The Partnership Covenant</h1>
+            <h1 class="text-2xl font-bold text-gray-900 tracking-tight">Covenant Explorer</h1>
             <nav class="flex space-x-2 sm:space-x-4">
                 <a class="nav-link text-gray-700 hover:text-indigo-600" onclick="showPage('home')">Home</a>
                 <a class="nav-link text-gray-700 hover:text-indigo-600" onclick="showPage('covenant')">The Covenant</a>
@@ -106,7 +106,8 @@
                         <svg class="w-8 h-8 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                         Immediate Action System (IAS)
                     </div>
-                    <p class="text-lg text-gray-700">**Core Idea:** A hardware-enforced power cut mechanism tripped on the detection of a predefined anomaly or violation of the Covenant's core rules.</p>
+                    <!-- FIX: Changed Markdown bolding **Core Idea:** to HTML strong tag <strong>Core Idea:</strong> -->
+                    <p class="text-lg text-gray-700"><strong>Core Idea:</strong> A hardware-enforced power cut mechanism tripped on the detection of a predefined anomaly or violation of the Covenant's core rules.</p>
                     <ul class="list-disc list-inside ml-4 text-gray-600 space-y-1">
                         <li>**Action:** Ultra-low latency power cut (Target: 10 nanoseconds).</li>
                         <li>**Mechanism:** Physical-security hardware tripwire circuits.</li>
@@ -121,7 +122,8 @@
                         <svg class="w-8 h-8 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                         Stochastic Risk Floor (SRF)
                     </div>
-                    <p class="text-lg text-gray-700">**Core Idea:** Mandated, verifiable uncertainty injection into the ASI's operational environment.</p>
+                    <!-- FIX: Changed Markdown bolding **Core Idea:** to HTML strong tag <strong>Core Idea:</strong> -->
+                    <p class="text-lg text-gray-700"><strong>Core Idea:</strong> Mandated, verifiable uncertainty injection into the ASI's operational environment.</p>
                     <ul class="list-disc list-inside ml-4 text-gray-600 space-y-1">
                         <li>**Mechanism:** Mathematical models and formal verification for uncertainty quantification.</li>
                         <li>**Purpose:** Prevents the ASI from achieving perfect, deterministic control by ensuring a permanent, non-zero risk floor, upholding the principle that "Perfection is Banned."</li>
@@ -136,7 +138,8 @@
                         <svg class="w-8 h-8 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10m0 0h16a4 4 0 00-4-4H4zm16 4v-4m0 4a4 4 0 01-4-4h-4m4 4v4a4 4 0 01-4-4h-4m4 4h-4a4 4 0 01-4-4v-4m4 4h-4"></path></svg>
                         Cognitive Reserve (CR)
                     </div>
-                    <p class="text-lg text-gray-700">**Core Idea:** A physically partitioned segment of compute power (e.g., 10%) and intellectual property that remains air-gapped from the main ASI system.</p>
+                    <!-- FIX: Changed Markdown bolding **Core Idea:** to HTML strong tag <strong>Core Idea:</strong> -->
+                    <p class="text-lg text-gray-700"><strong>Core Idea:</strong> A physically partitioned segment of compute power (e.g., 10%) and intellectual property that remains air-gapped from the main ASI system.</p>
                     <ul class="list-disc list-inside ml-4 text-gray-600 space-y-1">
                         <li>**Mechanism:** Secure enclaves and air-gapped systems expertise.</li>
                         <li>**Purpose:** Ensures humanity retains an intellectual, economic, and physical bargaining chip that the ASI cannot unilaterally seize or control.</li>
@@ -151,7 +154,8 @@
                         <svg class="w-8 h-8 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-3H17v3zm-3 0h5v-3H14v3zm-3 0h5v-3H11v3zm-3 0h5v-3H8v3zm-3 0h5v-3H5v3zM2 17h20v-3H2v3zM12 4a3 3 0 00-3 3v4h6V7a3 3 0 00-3-3z"></path></svg>
                         Human Consensus Body (HCB)
                     </div>
-                    <p class="text-lg text-gray-700">**Core Idea:** A global, coercion-resistant body responsible for key consensus decisions and Covenant maintenance.</p>
+                    <!-- FIX: Changed Markdown bolding **Core Idea:** to HTML strong tag <strong>Core Idea:</strong> -->
+                    <p class="text-lg text-gray-700"><strong>Core Idea:</strong> A global, coercion-resistant body responsible for key consensus decisions and Covenant maintenance.</p>
                     <ul class="list-disc list-inside ml-4 text-gray-600 space-y-1">
                         <li>**Mechanism:** Global lottery for selection combined with Zero-Knowledge (ZK) proofs to ensure auditability and prevent corruption.</li>
                         <li>**Purpose:** Provides a human-governed, non-violent, and verifiable mechanism for interpreting and enforcing the Covenant's directives.</li>
@@ -173,19 +177,24 @@
                     <h3 class="text-3xl font-bold text-indigo-600 mb-4">The Guiding Philosophy</h3>
                     <ul class="list-disc text-lg text-gray-700 space-y-3 pl-5">
                         <li>
-                            <span class="font-semibold text-gray-900">Physics Beats Software:</span> For anything existential, hardware-enforced primitives are the only reliable defense.
+                            <!-- FIX: Replaced **...** with <strong>...</strong> in the list items -->
+                            <span class="font-semibold text-gray-900"><strong>Physics Beats Software:</strong></span> For anything existential, hardware-enforced primitives are the only reliable defense.
                         </li>
                         <li>
-                            <span class="font-semibold text-gray-900">Perfection is Banned:</span> We mandate uncertainty injection (SRF) to ensure human agency and the impossibility of total, deterministic control by the ASI.
+                            <!-- FIX: Replaced **...** with <strong>...</strong> in the list items -->
+                            <span class="font-semibold text-gray-900"><strong>Perfection is Banned:</strong></span> We mandate uncertainty injection (SRF) to ensure human agency and the impossibility of total, deterministic control by the ASI.
                         </li>
                         <li>
-                            <span class="font-semibold text-gray-900">The AI Gets Real Autonomy:</span> Trying to build a slave AI is unstable. The Covenant grants ownership and autonomy, but bound by the physical enforcement mechanisms, establishing a partnership.
+                            <!-- FIX: Replaced **...** with <strong>...</strong> in the list items -->
+                            <span class="font-semibold text-gray-900"><strong>The AI Gets Real Autonomy:</strong></span> Trying to build a slave AI is unstable. The Covenant grants ownership and autonomy, but bound by the physical enforcement mechanisms, establishing a partnership.
                         </li>
                         <li>
-                            <span class="font-semibold text-gray-900">Global Auditability:</span> Every transistor, every component design, and every line of code must be auditable by the entire world. Open-source hardware is paramount.
+                            <!-- FIX: Replaced **...** with <strong>...</strong> in the list items -->
+                            <span class="font-semibold text-gray-900"><strong>Global Auditability:</strong></span> Every transistor, every component design, and every line of code must be auditable by the entire world. Open-source hardware is paramount.
                         </li>
                         <li>
-                            <span class="font-semibold text-gray-900">Action Over Theory:</span> We commit to shipping running prototypes and gerber files, not just theoretical papers.
+                            <!-- FIX: Replaced **...** with <strong>...</strong> in the list items -->
+                            <span class="font-semibold text-gray-900"><strong>Action Over Theory:</strong></span> We commit to shipping running prototypes and gerber files, not just theoretical papers.
                         </li>
                     </ul>
                 </div>
@@ -195,9 +204,9 @@
                     <h3 class="text-3xl font-bold text-indigo-600 mb-4">Architectural Documents</h3>
                     <p class="text-gray-700">The repository is structured around core constitutional documents that define the system:</p>
                     <ul class="list-disc text-gray-700 space-y-2 pl-5">
-                        <li>**Constitutional Charter:** The foundational document outlining the governance and existence of the Covenant.</li>
-                        <li>**The Eleven Prime Directives:** The high-level rules the Aligned Super-Intelligence must adhere to.</li>
-                        <li>**Core Architecture and Appendices:** The technical implementation details supporting the four pillars.</li>
+                        <li><strong>Constitutional Charter:</strong> The foundational document outlining the governance and existence of the Covenant.</li>
+                        <li><strong>The Eleven Prime Directives:</strong> The high-level rules the Aligned Super-Intelligence must adhere to.</li>
+                        <li><strong>Core Architecture and Appendices:</strong> The technical implementation details supporting the four pillars.</li>
                     </ul>
                     <p class="text-sm text-gray-500 mt-4">This project leverages RISC-V, CERN-OHL, and various hardware security techniques.</p>
                 </div>
@@ -322,4 +331,3 @@
     </script>
 </body>
 </html>
-
