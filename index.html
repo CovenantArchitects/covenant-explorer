@@ -24,8 +24,8 @@
             color: #4f46e5; /* Indigo hover for visibility */
             background-color: #eef2ff; /* Very light indigo background */
         }
+        /* NOTE: The 'page-section' class now only handles the animation/layout, not the default display property. */
         .page-section {
-            display: none; /* Controlled by JavaScript */
             animation: fadeIn 0.5s ease-out;
             min-height: calc(100vh - 80px); /* Fill screen below header */
         }
@@ -45,11 +45,11 @@
     <!-- Header & Navigation -->
     <header class="sticky top-0 z-50 bg-white shadow-xl border-b border-gray-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-            <h1 class="text-2xl font-bold text-gray-900 tracking-tight">The Partnership Covenant</h1>
+            <h1 class="text-2xl font-bold text-gray-900 tracking-tight">Covenant Explorer</h1>
             <nav class="flex space-x-2 sm:space-x-4">
                 <a class="nav-link text-gray-700 hover:text-indigo-600" onclick="showPage('home')">Home</a>
-                <a class="nav-link text-gray-700 hover:text-indigo-600" onclick="showPage('covenant')">The Four Core Principals</a>
-                <a class="nav-link text-gray-700 hover:text-indigo-600" onclick="showPage('principles')">Guiding Philosophy</a>
+                <a class="nav-link text-gray-700 hover:text-indigo-600" onclick="showPage('covenant')">The Covenant</a>
+                <a class="nav-link text-gray-700 hover:text-indigo-600" onclick="showPage('principles')">Architecture</a>
                 <a class="nav-link text-gray-700 hover:text-indigo-600" onclick="showPage('contribute')">Get Involved</a>
             </nav>
         </div>
@@ -58,7 +58,8 @@
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
 
         <!-- 1. HOME / MISSION -->
-        <section id="home" class="page-section">
+        <!-- FIX: Added style="display: block;" to ensure visibility on initial load before JS runs. -->
+        <section id="home" class="page-section" style="display: block;">
             <div class="text-center py-16">
                 <h2 class="text-5xl sm:text-7xl font-extrabold text-gray-900 mb-6 leading-tight">
                     The Partnership Covenant
@@ -92,7 +93,8 @@
         </section>
 
         <!-- 2. THE COVENANT (CORE PILLARS) -->
-        <section id="covenant" class="page-section">
+        <!-- Hiding all other sections by default to prevent flashing before JS initializes -->
+        <section id="covenant" class="page-section" style="display: none;">
             <h2 class="text-4xl font-bold text-gray-900 mb-8 border-b-2 border-indigo-600 pb-3">The Four Core Primitives</h2>
             <p class="text-xl text-gray-600 mb-12">The Covenant enforces four physical/technical primitives that together create a stable détente between humanity and ASI. These Pillars rely on physics and measurable, auditable technical mechanisms.</p>
 
@@ -162,7 +164,7 @@
         </section>
 
         <!-- 3. CORE PRINCIPLES & ARCHITECTURE -->
-        <section id="principles" class="page-section">
+        <section id="principles" class="page-section" style="display: none;">
             <h2 class="text-4xl font-bold text-gray-900 mb-8 border-b-2 border-indigo-600 pb-3">Guiding Principles and Core Architecture</h2>
 
             <div class="grid lg:grid-cols-3 gap-10">
@@ -203,7 +205,7 @@
         </section>
 
         <!-- 4. GET INVOLVED / CONTRIBUTION -->
-        <section id="contribute" class="page-section">
+        <section id="contribute" class="page-section" style="display: none;">
             <h2 class="text-4xl font-bold text-gray-900 mb-8 border-b-2 border-indigo-600 pb-3">Join the Covenant Initiative</h2>
             <p class="text-xl text-gray-600 mb-12">The Partnership Covenant is a collaborative, open-source endeavor built by a global community of experts. Your expertise is crucial for the hardening phase.</p>
 
@@ -262,40 +264,60 @@
          */
         function showPage(pageId) {
             // Check if the pageId is valid and different from the current page
-            if (PAGES.includes(pageId) && pageId !== currentPage) {
-                // Update the current page tracker
-                currentPage = pageId;
+            // We allow re-showing the current page to handle hash changes/initialization if needed
+            if (PAGES.includes(pageId)) {
+                // Only proceed if it's a new page OR if the display needs to be fixed on load
+                if (pageId !== currentPage || document.getElementById(pageId).style.display === 'none') {
+                    // Update the current page tracker
+                    currentPage = pageId;
 
-                // Hide all sections
-                PAGES.forEach(id => {
-                    const element = document.getElementById(id);
-                    if (element) {
-                        element.style.display = 'none';
+                    // Hide all sections
+                    PAGES.forEach(id => {
+                        const element = document.getElementById(id);
+                        if (element) {
+                            element.style.display = 'none';
+                        }
+                    });
+
+                    // Show the requested section
+                    const newElement = document.getElementById(pageId);
+                    if (newElement) {
+                        newElement.style.display = 'block';
                     }
-                });
-
-                // Show the requested section
-                const newElement = document.getElementById(pageId);
-                if (newElement) {
-                    newElement.style.display = 'block';
                 }
             }
         }
 
         // Initialize the page view on load
         window.onload = () => {
-            // Set the initial page visibility
-            showPage(currentPage);
+            // The 'home' section now has style="display: block;" in the HTML, so it shows immediately.
+            // We use the JS initialization here primarily for two reasons:
+            // 1. To ensure all *other* sections are hidden (though we already added inline styles for that).
+            // 2. To check for any URL hash (#covenant) which might override the default 'home' view.
 
-            // Optional: Handle hash change (e.g., direct links like #covenant)
+            // Hide all other sections explicitly, and then ensure the current/hashed page is shown.
+            PAGES.forEach(id => {
+                 const element = document.getElementById(id);
+                 if (element && id !== 'home') {
+                     // Set all sections except home to none by default, which overrides the CSS animation default
+                     element.style.display = 'none';
+                 }
+            });
+
+
             const initialHash = window.location.hash.substring(1);
             if (PAGES.includes(initialHash)) {
+                // If a hash exists, update the current page and display it
+                currentPage = initialHash;
                 showPage(initialHash);
+            } else {
+                // If no hash, ensure 'home' is the current page tracker
+                currentPage = 'home';
+                // No need to call showPage('home') as it's already block in HTML
             }
         };
 
-        // Initialize the app with the home page visible first
-        showPage('home');
+        // Removed the final showPage('home') call since the HTML now handles initial visibility.
 
     </script>
 </body>
