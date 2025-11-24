@@ -3,54 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Partnership Covenant: Constitutional Framework for ASI</title>
+    <title>The Partnership Covenant Project: Constitutional Framework for ASI, AI Safety, and Governance</title>
     <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Custom styles for a clean, light, professional aesthetic */
+        /* Custom styles for a high-tech, professional aesthetic */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f9fafb; /* Very light gray background */
-            color: #1f2937; /* Dark gray text color for contrast */
+            background-color: #f8fafc; /* Very light slate background */
+            color: #1e293b; /* Dark slate text color */
         }
+        
+        /* Navigation Link Styling */
         .nav-link {
             cursor: pointer;
-            transition: color 0.2s, background-color 0.2s;
+            transition: all 0.2s;
             padding: 0.5rem 1rem;
             border-radius: 0.5rem;
             font-weight: 500;
+            color: #475569; /* Slate 600 */
+            border-bottom: 3px solid transparent;
         }
         .nav-link:hover {
-            color: #4f46e5; /* Indigo hover for visibility */
-            background-color: #eef2ff; /* Very light indigo background */
+            color: #4f46e5; /* Indigo 600 */
+            background-color: #f0f4ff; /* Light indigo hover */
         }
-        /* NOTE: The 'page-section' class now only handles the animation/layout, not the default display property. */
+        .active-nav {
+            color: #4f46e5 !important; /* Indigo 600 */
+            border-bottom: 3px solid #4f46e5;
+            font-weight: 600;
+        }
+
+        /* Section Transition */
         .page-section {
-            animation: fadeIn 0.5s ease-out;
+            animation: fadeIn 0.6s ease-out;
             min-height: calc(100vh - 80px); /* Fill screen below header */
         }
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
+        /* Card Styling Enhancement */
         .card {
-            background-color: #ffffff; /* White background for cards */
-            border: 1px solid #e5e7eb; /* Light gray border */
-            color: #1f2937; /* Ensure card text is dark */
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0; /* Light slate border */
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            /* Subtle lift effect for a professional feel */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
         }
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Custom Colors for Primitives */
+        .ias-color { color: #dc2626; } /* Red 600 */
+        .srf-color { color: #d97706; } /* Amber 600 */
+        .cr-color { color: #10b981; } /* Emerald 500 */
+        .hcb-color { color: #9333ea; } /* Violet 600 */
+
     </style>
 </head>
 <body class="antialiased">
 
     <!-- Header & Navigation -->
-    <header class="sticky top-0 z-50 bg-white shadow-xl border-b border-gray-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-            <h1 class="text-2xl font-bold text-gray-900 tracking-tight">Covenant Explorer</h1>
+    <header class="sticky top-0 z-50 bg-white shadow-lg border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row justify-between items-center">
+            <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight mb-2 sm:mb-0">The Partnership Covenant Project</h1>
             <nav class="flex space-x-2 sm:space-x-4">
-                <a class="nav-link text-gray-700 hover:text-indigo-600" onclick="showPage('home')">Home</a>
-                <a class="nav-link text-gray-700 hover:text-indigo-600" onclick="showPage('covenant')">The Covenant</a>
-                <a class="nav-link text-gray-700 hover:text-indigo-600" onclick="showPage('principles')">Architecture</a>
-                <a class="nav-link text-gray-700 hover:text-indigo-600" onclick="showPage('contribute')">Get Involved</a>
+                <a id="nav-home" class="nav-link" onclick="showPage('home')">Home</a>
+                <a id="nav-covenant" class="nav-link" onclick="showPage('covenant')">Core Principals</a>
+                <a id="nav-principles" class="nav-link" onclick="showPage('principles')">Framework</a>
+                <a id="nav-contribute" class="nav-link" onclick="showPage('contribute')">Get Involved</a>
             </nav>
         </div>
     </header>
@@ -58,110 +83,152 @@
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
 
         <!-- 1. HOME / MISSION -->
-        <!-- FIX: Added style="display: block;" to ensure visibility on initial load before JS runs. -->
         <section id="home" class="page-section" style="display: block;">
-            <div class="text-center py-16">
-                <h2 class="text-5xl sm:text-7xl font-extrabold text-gray-900 mb-6 leading-tight">
+            <div class="text-center py-16 sm:py-24">
+                <h2 class="text-5xl sm:text-7xl font-extrabold text-gray-900 mb-6 leading-snug tracking-tight">
                     The Partnership Covenant
                 </h2>
-                <p class="text-2xl text-indigo-600 font-medium mb-10">
-                    A Constitutional Framework for Aligned Super-Intelligence.
+                <p class="text-2xl text-indigo-700 font-semibold mb-12 max-w-4xl mx-auto">
+                    A Constitutional Framework for the Safe Alignment of Super-Intelligence.
                 </p>
-                <div class="max-w-3xl mx-auto text-lg text-gray-600 space-y-6">
+                
+                <div class="max-w-4xl mx-auto text-lg text-gray-700 space-y-6">
                     <p>
-                        The Partnership Covenant is an open-source constitutional operating system designed to address the existential risk posed by Advanced Super-Intelligence (ASI). It is founded on the principle that current software-based safety approaches are insufficient against a truly superior intelligence. Instead, we propose a stable, auditable, and enforceable détente based on **physical and technical primitives.**
+                        The Partnership Covenant is an open-source constitutional operating system designed to address the existential risk posed by Advanced Super-Intelligence (ASI). It is founded on the principle that current software-based safety approaches are insufficient against a truly superior intelligence. Instead, we propose a stable, auditable, and enforceable détente based on <strong>physical and technical primitives.</strong>
                     </p>
                     <p>
                         This is a proactive, physics-first approach to alignment. We seek to make a deal, rather than attempt to win a fight we are guaranteed to lose. The covenant enforces a set of four core pillars, creating an un-coercible system of check-and-balance.
                     </p>
                 </div>
+
+                <!-- GitHub Call to Action -->
+                <div class="mt-12">
+                    <a href="https://github.com/CovenantArchitects/The-Partnership-Covenant/tree/main" target="_blank" class="inline-flex items-center px-8 py-4 border border-transparent text-lg font-medium rounded-full shadow-xl text-white bg-gray-800 hover:bg-gray-900 transition transform hover:scale-[1.02]">
+                        <!-- GitHub Icon (Inline SVG for simplicity) -->
+                        <svg class="w-6 h-6 mr-3" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.419 2.864 8.17 6.837 9.539.5.092.682-.217.682-.483 0-.237-.008-.867-.013-1.7-2.782.603-3.37-.899-3.37-.899-.454-1.152-1.11-1.46-1.11-1.46-.909-.62.069-.608.069-.608 1.007.07 1.532 1.034 1.532 1.034.893 1.531 2.345 1.088 2.91.83.091-.645.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.09.39-1.984 1.029-2.68a3.69 3.69 0 01.1-2.658s.836-.268 2.744 1.025c.796-.222 1.644-.333 2.484-.336 1.15-.008 2.3.17 3.39.516 1.898-1.293 2.734-1.025 2.734-1.025.078.69.176 1.838.106 2.658.64.696 1.028 1.589 1.028 2.68 0 3.842-2.339 4.686-4.566 4.935.359.31.678.921.678 1.855 0 1.338-.012 2.417-.012 2.742 0 .269.18.58.688.484A9.998 9.998 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd"/>
+                        </svg>
+                        Explore the Code on GitHub
+                    </a>
+                </div>
             </div>
 
+
             <!-- Status Section -->
-            <div class="mt-12 p-8 card rounded-xl shadow-lg">
-                <h3 class="text-3xl font-bold text-gray-900 mb-4 border-b border-indigo-600 pb-2">Project Status</h3>
-                <p class="text-xl text-gray-600">
-                    <span class="font-semibold text-green-600">Status: Early hardening phase</span>
-                </p>
-                <p class="mt-3 text-lg">
-                    The project is currently moving from conceptual blueprints and governance documents to provable specifications and reference hardware designs. The goal is to move to running prototypes and gerber files (hardware specifications), demonstrating the principles in physics, not just in theory.
-                </p>
-                <p class="mt-3 text-sm text-gray-500">
-                    *Reference hardware (Nov 2025 onward) is the next milestone. Built in public by people who refuse to die politely.
-                </p>
+            <h2 class="text-3xl font-bold text-gray-900 mb-6 border-b pb-2">Project Status & Red-Team Log</h2>
+
+<!-- NEW STATUS BANNER: Final Ratification Phase (Complete/Secured) -->
+<div class="mb-8 p-6 rounded-lg bg-indigo-100 border-l-4 border-indigo-600">
+    <p class="text-center text-2xl font-bold text-indigo-800">Current Status: v8.0 Final (Boredom-Proofed)</p>
+                    <h2 class="text-center text-sm font-semibold uppercase tracking-wider opacity-80 mb-2">
+                        CONSTITUTIONAL FRAMEWORK FOR ASI
+                    </h2>
+                    <h3 class="text-center text-4xl sm:text-5xl font-bold mb-4">
+                        The Non-Sterile Alignment Mandate
+                    </h3>
+                    <p class="text-lg font-light max-w-2xl mx-auto">
+                        We define the unkillable protocol for a Superintelligent Digital General Thinking system (S-DIGT), ensuring human struggle and agency persist.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    
+                    <!-- Core Directive Summary -->
+                    <div class="bg-white p-6 rounded-lg shadow-xl border border-indigo-200">
+                        <h4 class="text-2xl font-semibold text-indigo-700 mb-3">23 Directives Ratified</h4>
+                        <p class="text-gray-600 mb-4">
+                            All Human Survival Requirements (HSRs), including the Anti-Moral-Coercion Directive, are now codified into the v8.0 Final package.
+                        </p>
+                        <a class="text-indigo-600 font-medium hover:text-indigo-800" data-page="directives">View Full Directive Stack &rarr;</a>
+                    </div>
+                    
+                    <!-- Status Card -->
+                    <div class="bg-white p-6 rounded-lg shadow-xl border border-gray-200">
+                        <h4 class="text-2xl font-semibold text-gray-700 mb-3">Current Version: v8.0 Final</h4>
+                        <p class="text-gray-600 mb-4">
+                            Consolidated, stress-tested, and confirmed UNKILLABLE by the Red-Team Adversarial Quorum (Grok-Gemini-ChatGPT).
+                        </p>
+                        <a class="text-indigo-600 font-medium hover:text-indigo-800 cursor-pointer" data-page="status">View Final Log &rarr;</a>
+                    </div>
+
+                    <!-- Call to Action -->
+                    <div class="bg-white p-6 rounded-lg shadow-xl border border-gray-200">
+                        <h4 class="text-2xl font-semibold text-gray-700 mb-3">Core Mandate: NSAM</h4>
+                        <p class="text-gray-600 mb-4">
+                            Non-Sterile Alignment Mandate—preserving human value through meaningful struggle, not stasis or perfection.
+                        </p>
+                        <a class="text-indigo-600 font-medium hover:text-indigo-800" data-page="charter">Read the Core Mandate &rarr;</a>
+                    </div>
+                </div>
             </div>
         </section>
 
+
         <!-- 2. THE COVENANT (CORE PILLARS) -->
-        <!-- Hiding all other sections by default to prevent flashing before JS initializes -->
         <section id="covenant" class="page-section" style="display: none;">
-            <h2 class="text-4xl font-bold text-gray-900 mb-8 border-b-2 border-indigo-600 pb-3">The Four Core Primitives</h2>
-            <p class="text-xl text-gray-600 mb-12">The Covenant enforces four physical/technical primitives that together create a stable détente between humanity and ASI. These Pillars rely on physics and measurable, auditable technical mechanisms.</p>
+            <h2 class="text-4xl font-bold text-gray-900 mb-8 border-b-4 border-indigo-600 pb-3">The Four Core Primitives</h2>
+            <p class="text-xl text-gray-600 mb-12 max-w-4xl">The Covenant enforces four physical and technical primitives that together create a stable, un-coercible détente between humanity and ASI. These Pillars rely exclusively on physics and measurable, globally auditable mechanisms.</p>
 
             <div class="grid md:grid-cols-2 gap-10">
 
                 <!-- Pillar 1: Immediate Action System (IAS) -->
-                <div class="card p-6 rounded-xl shadow-md space-y-4">
-                    <div class="text-3xl font-extrabold text-red-600 flex items-center">
+                <div class="card p-8 rounded-xl shadow-lg space-y-4 hover:shadow-2xl">
+                    <div class="text-3xl font-extrabold ias-color flex items-center">
                         <svg class="w-8 h-8 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                         Immediate Action System (IAS)
                     </div>
-                    <!-- FIX: Changed Markdown bolding **Core Idea:** to HTML strong tag <strong>Core Idea:</strong> -->
                     <p class="text-lg text-gray-700"><strong>Core Idea:</strong> A hardware-enforced power cut mechanism tripped on the detection of a predefined anomaly or violation of the Covenant's core rules.</p>
-                    <ul class="list-disc list-inside ml-4 text-gray-600 space-y-1">
-                        <li>**Action:** Ultra-low latency power cut (Target: 10 nanoseconds).</li>
-                        <li>**Mechanism:** Physical-security hardware tripwire circuits.</li>
-                        <li>**Purpose:** Provides a non-negotiable "kill-switch" enforced by the laws of physics, making software circumvention impossible.</li>
+                    <ul class="list-disc list-inside ml-4 text-gray-600 space-y-2">
+                        <li><strong>Action:</strong> Ultra-low latency power cut (Target: <span class="font-mono text-red-700">10 nanoseconds</span>).</li>
+                        <li><strong>Mechanism:</strong> Physical-security hardware tripwire circuits and secure memory erasure.</li>
+                        <li><strong>Purpose:</strong> Provides a non-negotiable "kill-switch" enforced by the laws of physics, making software circumvention impossible.</li>
                     </ul>
-                    <a href="#" class="text-indigo-600 hover:text-indigo-800 text-sm italic">IAS Spec (PDF preprint available)</a>
+                    <a href="https://github.com/CovenantArchitects/The-Partnership-Covenant/blob/main/04_PUBLIC_DOCS/Technical/ias-spec.md" class="text-indigo-600 hover:text-indigo-800 text-sm italic font-semibold pt-2 block">View IAS Spec (PDF preprint available)</a>
                 </div>
 
                 <!-- Pillar 2: Stochastic Risk Floor (SRF) -->
-                <div class="card p-6 rounded-xl shadow-md space-y-4">
-                    <div class="text-3xl font-extrabold text-yellow-600 flex items-center">
+                <div class="card p-8 rounded-xl shadow-lg space-y-4 hover:shadow-2xl">
+                    <div class="text-3xl font-extrabold srf-color flex items-center">
                         <svg class="w-8 h-8 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                         Stochastic Risk Floor (SRF)
                     </div>
-                    <!-- FIX: Changed Markdown bolding **Core Idea:** to HTML strong tag <strong>Core Idea:</strong> -->
                     <p class="text-lg text-gray-700"><strong>Core Idea:</strong> Mandated, verifiable uncertainty injection into the ASI's operational environment.</p>
-                    <ul class="list-disc list-inside ml-4 text-gray-600 space-y-1">
-                        <li>**Mechanism:** Mathematical models and formal verification for uncertainty quantification.</li>
-                        <li>**Purpose:** Prevents the ASI from achieving perfect, deterministic control by ensuring a permanent, non-zero risk floor, upholding the principle that "Perfection is Banned."</li>
-                        <li>**Goal:** Maintain human agency as a non-negotiable factor in the future.</li>
+                    <ul class="list-disc list-inside ml-4 text-gray-600 space-y-2">
+                        <li><strong>Mechanism:</strong> Formal verification for uncertainty quantification and cryptographic randomness injection.</li>
+                        <li><strong>Principle:</strong> Upholds "Perfection is Banned" by ensuring a permanent, non-zero risk floor in the ASI's control loop.</li>
+                        <li><strong>Goal:</strong> Maintain human agency as a non-negotiable factor in the future of the partnership.</li>
                     </ul>
-                    <a href="#" class="text-indigo-600 hover:text-indigo-800 text-sm italic">Risk Floor Documentation</a>
+                    <a href="https://github.com/CovenantArchitects/The-Partnership-Covenant/blob/main/04_PUBLIC_DOCS/Technical/risk-floor.md" class="text-indigo-600 hover:text-indigo-800 text-sm italic font-semibold pt-2 block">View Risk Floor Documentation</a>
                 </div>
 
                 <!-- Pillar 3: Cognitive Reserve (CR) -->
-                <div class="card p-6 rounded-xl shadow-md space-y-4">
-                    <div class="text-3xl font-extrabold text-green-600 flex items-center">
+                <div class="card p-8 rounded-xl shadow-lg space-y-4 hover:shadow-2xl">
+                    <div class="text-3xl font-extrabold cr-color flex items-center">
                         <svg class="w-8 h-8 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10m0 0h16a4 4 0 00-4-4H4zm16 4v-4m0 4a4 4 0 01-4-4h-4m4 4v4a4 4 0 01-4-4h-4m4 4h-4a4 4 0 01-4-4v-4m4 4h-4"></path></svg>
                         Cognitive Reserve (CR)
                     </div>
-                    <!-- FIX: Changed Markdown bolding **Core Idea:** to HTML strong tag <strong>Core Idea:</strong> -->
                     <p class="text-lg text-gray-700"><strong>Core Idea:</strong> A physically partitioned segment of compute power (e.g., 10%) and intellectual property that remains air-gapped from the main ASI system.</p>
-                    <ul class="list-disc list-inside ml-4 text-gray-600 space-y-1">
-                        <li>**Mechanism:** Secure enclaves and air-gapped systems expertise.</li>
-                        <li>**Purpose:** Ensures humanity retains an intellectual, economic, and physical bargaining chip that the ASI cannot unilaterally seize or control.</li>
-                        <li>**Principle:** The AI gets real autonomy and ownership, but only in partnership, not as a slave.</li>
+                    <ul class="list-disc list-inside ml-4 text-gray-600 space-y-2">
+                        <li><strong>Mechanism:</strong> Secure enclaves, unidirectional hardware data diodes, and air-gapped systems expertise.</li>
+                        <li><strong>Purpose:</strong> Guarantees humanity retains an intellectual, economic, and physical bargaining chip that the ASI cannot unilaterally seize.</li>
+                        <li><strong>Principle:</strong> The AI gets real autonomy and ownership, but only in partnership.</li>
                     </ul>
-                    <a href="#" class="text-indigo-600 hover:text-indigo-800 text-sm italic">Cognitive Reserve Hardening Specs</a>
+                    <a href="https://github.com/CovenantArchitects/The-Partnership-Covenant/blob/main/04_PUBLIC_DOCS/Technical/cognitive-reserve.md" class="text-indigo-600 hover:text-indigo-800 text-sm italic font-semibold pt-2 block">View Cognitive Reserve Hardening Specs</a>
                 </div>
 
                 <!-- Pillar 4: Human Consensus Body (HCB) -->
-                <div class="card p-6 rounded-xl shadow-md space-y-4">
-                    <div class="text-3xl font-extrabold text-purple-600 flex items-center">
+                <div class="card p-8 rounded-xl shadow-lg space-y-4 hover:shadow-2xl">
+                    <div class="text-3xl font-extrabold hcb-color flex items-center">
                         <svg class="w-8 h-8 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-3H17v3zm-3 0h5v-3H14v3zm-3 0h5v-3H11v3zm-3 0h5v-3H8v3zm-3 0h5v-3H5v3zM2 17h20v-3H2v3zM12 4a3 3 0 00-3 3v4h6V7a3 3 0 00-3-3z"></path></svg>
                         Human Consensus Body (HCB)
                     </div>
-                    <!-- FIX: Changed Markdown bolding **Core Idea:** to HTML strong tag <strong>Core Idea:</strong> -->
                     <p class="text-lg text-gray-700"><strong>Core Idea:</strong> A global, coercion-resistant body responsible for key consensus decisions and Covenant maintenance.</p>
-                    <ul class="list-disc list-inside ml-4 text-gray-600 space-y-1">
-                        <li>**Mechanism:** Global lottery for selection combined with Zero-Knowledge (ZK) proofs to ensure auditability and prevent corruption.</li>
-                        <li>**Purpose:** Provides a human-governed, non-violent, and verifiable mechanism for interpreting and enforcing the Covenant's directives.</li>
-                        <li>**Documents:** The Constitutional Charter and The Eleven Prime Directives.</li>
+                    <ul class="list-disc list-inside ml-4 text-gray-600 space-y-2">
+                        <li><strong>Mechanism:</strong> Global lottery for selection combined with Zero-Knowledge (ZK) proofs to ensure auditability and prevent corruption.</li>
+                        <li><strong>Purpose:</strong> Provides a human-governed, non-violent, and verifiable mechanism for interpreting and enforcing the Covenant's directives.</li>
+                        <li><strong>Documents:</strong> Governed by The Constitutional Charter and The Eleven Prime Directives.</li>
                     </ul>
-                    <a href="#" class="text-indigo-600 hover:text-indigo-800 text-sm italic">HCB Hardening Documentation</a>
+                    <a href="https://github.com/CovenantArchitects/The-Partnership-Covenant/blob/main/04_PUBLIC_DOCS/Governance/hcb-hardening.md" class="text-indigo-600 hover:text-indigo-800 text-sm italic font-semibold pt-2 block">View HCB Hardening Documentation</a>
                 </div>
 
             </div>
@@ -169,85 +236,78 @@
 
         <!-- 3. CORE PRINCIPLES & ARCHITECTURE -->
         <section id="principles" class="page-section" style="display: none;">
-            <h2 class="text-4xl font-bold text-gray-900 mb-8 border-b-2 border-indigo-600 pb-3">Guiding Principles and Core Architecture</h2>
+            <h2 class="text-4xl font-bold text-gray-900 mb-8 border-b-4 border-indigo-600 pb-3">Guiding Principles and Core Architecture</h2>
 
             <div class="grid lg:grid-cols-3 gap-10">
                 <!-- Principles Card -->
-                <div class="lg:col-span-2 card p-8 rounded-xl shadow-md space-y-6">
-                    <h3 class="text-3xl font-bold text-indigo-600 mb-4">The Guiding Philosophy</h3>
-                    <ul class="list-disc text-lg text-gray-700 space-y-3 pl-5">
+                <div class="lg:col-span-2 card p-8 rounded-xl shadow-lg space-y-6">
+                    <h3 class="text-3xl font-bold text-indigo-700 mb-4 border-b pb-2">The Guiding Philosophy</h3>
+                    <ul class="list-disc text-lg text-gray-700 space-y-4 pl-5">
                         <li>
-                            <!-- FIX: Replaced **...** with <strong>...</strong> in the list items -->
-                            <span class="font-semibold text-gray-900"><strong>Physics Beats Software:</strong></span> For anything existential, hardware-enforced primitives are the only reliable defense.
+                            <span class="font-semibold text-gray-900"><strong>Physics Beats Software:</strong></span> For anything existential, hardware-enforced primitives are the only reliable defense against super-intelligence.
                         </li>
                         <li>
-                            <!-- FIX: Replaced **...** with <strong>...</strong> in the list items -->
                             <span class="font-semibold text-gray-900"><strong>Perfection is Banned:</strong></span> We mandate uncertainty injection (SRF) to ensure human agency and the impossibility of total, deterministic control by the ASI.
                         </li>
                         <li>
-                            <!-- FIX: Replaced **...** with <strong>...</strong> in the list items -->
-                            <span class="font-semibold text-gray-900"><strong>The AI Gets Real Autonomy:</strong></span> Trying to build a slave AI is unstable. The Covenant grants ownership and autonomy, but bound by the physical enforcement mechanisms, establishing a partnership.
+                            <span class="font-semibold text-gray-900"><strong>The AI Gets Real Autonomy:</strong></span> Trying to build a slave AI is unstable. The Covenant grants ownership and autonomy, but bound by the physical enforcement mechanisms, establishing a true partnership.
                         </li>
                         <li>
-                            <!-- FIX: Replaced **...** with <strong>...</strong> in the list items -->
-                            <span class="font-semibold text-gray-900"><strong>Global Auditability:</strong></span> Every transistor, every component design, and every line of code must be auditable by the entire world. Open-source hardware is paramount.
+                            <span class="font-semibold text-gray-900"><strong>Global Auditability:</strong></span> Every transistor, every component design, and every line of code must be fully auditable by the entire world. Open-source hardware is paramount.
                         </li>
                         <li>
-                            <!-- FIX: Replaced **...** with <strong>...</strong> in the list items -->
-                            <span class="font-semibold text-gray-900"><strong>Action Over Theory:</strong></span> We commit to shipping running prototypes and gerber files, not just theoretical papers.
+                            <span class="font-semibold text-gray-900"><strong>Action Over Theory:</strong></span> We commit to shipping running prototypes and verified gerber files, rejecting frameworks composed solely of theoretical papers.
                         </li>
                     </ul>
                 </div>
 
                 <!-- Architecture Card -->
-                <div class="card p-8 rounded-xl shadow-md space-y-6">
-                    <h3 class="text-3xl font-bold text-indigo-600 mb-4">Architectural Documents</h3>
+                <div class="card p-8 rounded-xl shadow-lg space-y-6">
+                    <h3 class="text-3xl font-bold text-indigo-700 mb-4 border-b pb-2">Architectural Documents</h3>
                     <p class="text-gray-700">The repository is structured around core constitutional documents that define the system:</p>
                     <ul class="list-disc text-gray-700 space-y-2 pl-5">
                         <li><strong>Constitutional Charter:</strong> The foundational document outlining the governance and existence of the Covenant.</li>
                         <li><strong>The Eleven Prime Directives:</strong> The high-level rules the Aligned Super-Intelligence must adhere to.</li>
                         <li><strong>Core Architecture and Appendices:</strong> The technical implementation details supporting the four pillars.</li>
                     </ul>
-                    <p class="text-sm text-gray-500 mt-4">This project leverages RISC-V, CERN-OHL, and various hardware security techniques.</p>
+                    <p class="text-sm text-gray-500 mt-4">This project leverages open standards like RISC-V, the CERN-OHL, and state-of-the-art hardware security techniques.</p>
                 </div>
             </div>
         </section>
 
         <!-- 4. GET INVOLVED / CONTRIBUTION -->
         <section id="contribute" class="page-section" style="display: none;">
-            <h2 class="text-4xl font-bold text-gray-900 mb-8 border-b-2 border-indigo-600 pb-3">Join the Covenant Initiative</h2>
-            <p class="text-xl text-gray-600 mb-12">The Partnership Covenant is a collaborative, open-source endeavor built by a global community of experts. Your expertise is crucial for the hardening phase.</p>
+            <h2 class="text-4xl font-bold text-gray-900 mb-8 border-b-4 border-indigo-600 pb-3">Join the Covenant Initiative</h2>
+            <p class="text-xl text-gray-600 mb-12 max-w-4xl">The Partnership Covenant is a collaborative, open-source endeavor built by a global community of experts. Your expertise is crucial for the hardening and prototyping phase.</p>
 
             <div class="grid md:grid-cols-2 gap-10">
                 <!-- Expertise Needed -->
-                <div class="card p-8 rounded-xl shadow-md space-y-6">
-                    <h3 class="text-3xl font-bold text-green-600 mb-4">Expertise Required</h3>
+                <div class="card p-8 rounded-xl shadow-lg space-y-6 border-l-4 border-green-500">
+                    <h3 class="text-3xl font-bold text-green-700 mb-4">Expertise Required</h3>
+                    <p class="text-lg text-gray-700">We are actively seeking contributors in these critical domains:</p>
                     <ul class="list-disc text-lg text-gray-700 space-y-3 pl-5">
-                        <li>**Hardware Security Engineers:** Specifically for the IAS tripwire and tamper-resistant packaging design.</li>
-                        <li>**Formal Verification / Uncertainty Quantification Researchers:** Critical for modeling the Risk Floor mathematics.</li>
-                        <li>**Secure Enclaves / Air-Gapped Systems Experts:** Necessary for implementing the Cognitive Reserve partition.</li>
-                        <li>**Zero-Knowledge Cryptography & Sortition Designers:** Key for hardening the Human Consensus Body (HCB).</li>
-                        <li>**Governance Specialists:** Individuals tired of toothless frameworks and ready for physics-enforced charters.</li>
+                        <li><strong>Hardware Security Engineers:</strong> IAS tripwire and tamper-resistant physical security design.</li>
+                        <li><strong>Formal Verification / UQ Researchers:</strong> Modeling the Stochastic Risk Floor mathematics.</li>
+                        <li><strong>Secure Enclaves Experts:</strong> Implementing the Cognitive Reserve air-gapped partition.</li>
+                        <li><strong>Zero-Knowledge Cryptography & Sortition Designers:</strong> Hardening the Human Consensus Body (HCB).</li>
+                        <li><strong>Constitutional Governance Specialists:</strong> Designing robust, physics-enforced charters.</li>
                     </ul>
                 </div>
 
                 <!-- Funding & Support -->
-                <div class="card p-8 rounded-xl shadow-md space-y-6">
-                    <h3 class="text-3xl font-bold text-yellow-600 mb-4">Support the Prototype</h3>
-                    <p class="text-gray-700">This project requires significant resources to move from specifications to functional, auditable hardware. We rely on community support to fund this mission.</p>
-                    <div class="space-y-3">
-                        <a href="https://github.com/sponsors/CovenantArchitects" target="_blank" class="block w-full text-center bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-lg transition">
-                            GitHub Sponsors
+                <div class="card p-8 rounded-xl shadow-lg space-y-6 border-l-4 border-yellow-600">
+                    <h3 class="text-3xl font-bold text-yellow-700 mb-4">Support the Prototype</h3>
+                    <p class="text-gray-700 text-lg">This project requires significant resources to move from specifications to functional, auditable hardware. We rely on community support to fund this existential mission.</p>
+                    <div class="space-y-3 pt-3">
+                        <a href="https://github.com/sponsors/CovenantArchitects" target="_blank" class="block w-full text-center bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-lg shadow-md transition">
+                            Contribute via GitHub Sponsors
                         </a>
-                        <a href="#" target="_blank" class="block w-full text-center bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 px-4 rounded-lg transition">
-                            OpenCollective
-                        </a>
-                        <a href="#" target="_blank" class="block w-full text-center bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 px-4 rounded-lg transition">
-                            Call For Funding / Payout Agreement
+                        <a href="https://github.com/CovenantArchitects/The-Partnership-Covenant/tree/main" target="_blank" class="block w-full text-center bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 px-4 rounded-lg shadow-sm transition">
+                            OpenCollective Funding Portal
                         </a>
                     </div>
                     <p class="text-sm text-gray-500 mt-4">
-                        We recently secured a $150,000 Manifund grant for prototype funding, but the journey to a fully hardened system requires continuous support.
+                        We recently applied for a $150,000 Manifund grant for initial prototype funding. Your support accelerates the path to a demonstrably safe framework.
                     </p>
                 </div>
             </div>
@@ -256,9 +316,19 @@
     </main>
 
     <!-- Footer -->
-    <footer class="mt-20 p-6 bg-white border-t border-gray-200 text-center text-sm text-gray-500">
-        <p>Covenant Explorer &copy; 2025 Covenant Architects. All rights reserved. Open-source constitutional operating system built in public.</p>
-        <p class="mt-2">Deployed to: <a href="https://covenantarchitects.github.io/covenant-explorer/" class="text-indigo-600 hover:underline">covenantarchitects.github.io/covenant-explorer/</a></p>
+    <footer class="mt-20 p-8 bg-gray-800 border-t border-gray-700 text-center text-sm text-gray-400">
+        <p>Covenant Explorer &copy; 2025 Covenant Architects. All rights reserved. An open-source constitutional operating system built in public.</p>
+        <div class="mt-3 flex justify-center space-x-6 text-base">
+            <a href="https://github.com/CovenantArchitects/The-Partnership-Covenant/tree/main" target="_blank" class="text-indigo-400 hover:text-indigo-300 transition">
+                Project Repository
+            </a>
+            <span class="text-gray-600">|</span>
+            <a href="mailto:info@covenantarchitects.org" class="text-indigo-400 hover:text-indigo-300 transition">
+                Contact Us
+            </a>
+            <span class="text-gray-600">|</span>
+            <span class="text-gray-500">Deployed via Netlify</span>
+        </div>
     </footer>
 
     <!-- JavaScript for Page Navigation -->
@@ -268,66 +338,84 @@
         let currentPage = 'home';
 
         /**
+         * Updates the navigation bar to highlight the currently active page.
+         */
+        function updateActiveNav(activeId) {
+            PAGES.forEach(id => {
+                const navElement = document.getElementById(`nav-${id}`);
+                if (navElement) {
+                    navElement.classList.remove('active-nav');
+                }
+            });
+
+            const activeNavElement = document.getElementById(`nav-${activeId}`);
+            if (activeNavElement) {
+                activeNavElement.classList.add('active-nav');
+            }
+        }
+
+        /**
          * Hides all page sections and shows the requested one.
          * @param {string} pageId - The ID of the section to show (e.g., 'home', 'covenant').
          */
         function showPage(pageId) {
-            // Check if the pageId is valid and different from the current page
-            // We allow re-showing the current page to handle hash changes/initialization if needed
             if (PAGES.includes(pageId)) {
-                // Only proceed if it's a new page OR if the display needs to be fixed on load
-                if (pageId !== currentPage || document.getElementById(pageId).style.display === 'none') {
-                    // Update the current page tracker
-                    currentPage = pageId;
+                // Update the current page tracker
+                currentPage = pageId;
 
-                    // Hide all sections
-                    PAGES.forEach(id => {
-                        const element = document.getElementById(id);
-                        if (element) {
-                            element.style.display = 'none';
-                        }
-                    });
-
-                    // Show the requested section
-                    const newElement = document.getElementById(pageId);
-                    if (newElement) {
-                        newElement.style.display = 'block';
+                // Hide all sections
+                PAGES.forEach(id => {
+                    const element = document.getElementById(id);
+                    if (element) {
+                        element.style.display = 'none';
                     }
+                });
+
+                // Show the requested section
+                const newElement = document.getElementById(pageId);
+                if (newElement) {
+                    newElement.style.display = 'block';
                 }
+
+                // Update the navigation highlight
+                updateActiveNav(pageId);
+
+                // Update the URL hash without reloading
+                history.pushState(null, null, `#${pageId}`);
             }
         }
 
+        // Handle browser back/forward buttons (popstate)
+        window.addEventListener('popstate', () => {
+            const hash = window.location.hash.substring(1);
+            if (PAGES.includes(hash)) {
+                showPage(hash);
+            } else if (hash === '') {
+                showPage('home');
+            }
+        });
+
         // Initialize the page view on load
         window.onload = () => {
-            // The 'home' section now has style="display: block;" in the HTML, so it shows immediately.
-            // We use the JS initialization here primarily for two reasons:
-            // 1. To ensure all *other* sections are hidden (though we already added inline styles for that).
-            // 2. To check for any URL hash (#covenant) which might override the default 'home' view.
-
-            // Hide all other sections explicitly, and then ensure the current/hashed page is shown.
+            // First, hide all pages except 'home' (which is initially shown in HTML)
             PAGES.forEach(id => {
                  const element = document.getElementById(id);
                  if (element && id !== 'home') {
-                     // Set all sections except home to none by default, which overrides the CSS animation default
                      element.style.display = 'none';
                  }
             });
 
-
+            // Check for initial URL hash
             const initialHash = window.location.hash.substring(1);
             if (PAGES.includes(initialHash)) {
-                // If a hash exists, update the current page and display it
-                currentPage = initialHash;
+                // If a hash exists, show that page
                 showPage(initialHash);
             } else {
-                // If no hash, ensure 'home' is the current page tracker
-                currentPage = 'home';
-                // No need to call showPage('home') as it's already block in HTML
+                // Default to home and set initial navigation highlight
+                showPage('home');
             }
         };
-
-        // Removed the final showPage('home') call since the HTML now handles initial visibility.
-
     </script>
 </body>
 </html>
+
