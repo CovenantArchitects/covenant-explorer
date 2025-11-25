@@ -44,6 +44,8 @@ The **Canonical Charter (V4.0/V8.0)** is complete. The project is currently in t
 
 ### Get Involved
 
+The Partnership Covenant Project Repo: [The Partnership Covenant Project](https://github.com/CovenantArchitects/The-Partnership-Covenant)
+
 The documentation for all core technical specifications (Appendix A-I) can be found on our website: [partnershipcovenant.online](https://partnershipcovenant.online/#documents).
 
 To begin contributing, please see the **[CONTRIBUTING.md](CONTRIBUTING.md)** file.
