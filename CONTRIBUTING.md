@@ -25,4 +25,4 @@ We operate on a staged roadmap. Please focus your efforts on one of the followin
 ## 3. Communication
 
 * **Primary Channel:** GitHub Issues.
-* **Sensitive Inquiries:** For private security or governance disclosures, please contact: `covenant.architects@protonmail.com`
+* **Sensitive Inquiries:** For private security or governance disclosures, please contact: `info@partnershipcovenant.online`
