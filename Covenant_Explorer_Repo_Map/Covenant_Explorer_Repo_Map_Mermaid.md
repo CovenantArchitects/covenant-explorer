@@ -2,6 +2,7 @@
 
 This diagram visualizes the complete structure of the public-facing static site repository, https://github.com/CovenantArchitects/covenant-explorer.
 
+```mermaid
 flowchart TB
     %% Style definitions for clarity (Core, Assets, Documentation)
     classDef core fill:#4f46e5, color:#fff, stroke:#4f46e5
